@@ -55,27 +55,6 @@ if ($count==0) {
 }
 
 //INSERTING DATA TO DATABASE
-
-if (isset($_SESSION['logname']) && ($_SESSION['rank'])) {
-    switch($_SESSION['rank']) {
-
-        case 1:
-            header('location:../admin/index.php');//redirect to  page
-            break;
-
-    }
-}elseif(!isset($_SESSION['logname']) && !isset($_SESSION['rank'])) {
-    header('Location:../sessions.php');
-}
-else
-{
-
-    header('Location:index.php');
-}
-
-include '../connection/db.php';
-$username=$_SESSION['logname'];
-
 $result1 = mysqli_query($con, "SELECT * FROM Login_Table WHERE Login_Username='$username'");
 
 while($res = mysqli_fetch_array($result1))
@@ -192,7 +171,7 @@ if(isset($_POST['finish'])) {
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-yellow layout-boxed">
+<body class="hold-transition skin-yellow sidebar-mini layout-boxed">
 <div class="wrapper">
 
     <header class="main-header">
@@ -219,7 +198,7 @@ if(isset($_POST['finish'])) {
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
+                            <span class="label label-warning">21</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="header">We have 21 missing people</li>
@@ -228,7 +207,7 @@ if(isset($_POST['finish'])) {
                                 <ul class="menu">
                                     <li>
                                         <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            <i class="fa fa-users text-aqua"></i> VNXkj888 Missing
                                         </a>
                                     </li>
                                 </ul>
@@ -241,13 +220,13 @@ if(isset($_POST['finish'])) {
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            <img src="../dist/img/user2-160x160.png" class="user-image" alt="User Image">
                             <span class="hidden-xs"><?php echo $username ; ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                <img src="../dist/img/user2-160x160.png" class="img-circle" alt="User Image">
 
                                 <p>
                                     <?php echo $username ; ?> - Welcome
@@ -296,7 +275,7 @@ if(isset($_POST['finish'])) {
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="../dist/img/user2-160x160.png" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p><?php echo $username ; ?></p>
@@ -321,38 +300,35 @@ if(isset($_POST['finish'])) {
 
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-user-secret"></i>
                         <span>New Entry</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
+                        <li><a href="index.php"><i class="fa fa-pencil"></i> Start</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa fa-file-pdf-o"></i>
-                        <span>All Reports</span>
+                        <i class="fa ion-ios-cog"></i>
+                        <span>Progress</span>
                         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
+                        <li><a href="index.php"><i class="fa fa-search-plus"></i>Show</a></li>
                     </ul>
                 </li>
-
+                
                 <li><a href=""><i class="fa fa-question"></i> <span>Get Help</span></a></li>
                 <li class="header">TAGS</li>
-                <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-                <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-                <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+                
+                <li><a href=""><i class="fa ion-ios-email-outline"></i> <span> Requests</span></a></li>
+                <li class="header">MORE</li>
+                <li><a href="../logout.php?logout"><i class="fa ion-ios-locked-outline text-green"></i> <span>Sign Out</span></a></li>
             </ul>
 
         </section>
@@ -426,8 +402,8 @@ if(isset($_POST['finish'])) {
                                 <label>
                                     <input type="checkbox" required> I agree to the <a href="#">terms</a>
                                 </label>
-
-                                <button type="submit" name="finish" class="btn btn-flat">Confirm and submit</button>
+                                    &
+                                <button type="submit" name="finish" class="btn btn-github">Finish</button>
 
                             </div>
                         </div>
@@ -436,8 +412,8 @@ if(isset($_POST['finish'])) {
 
 
                     <div>
-                        <input class="btn btn-default" type="button" name="back" id="back" value="Back" style="display:none;">
-                        <input class="btn btn-default" type="button" name="next" id="next" value="Next">
+                        <input class="btn btn-warning" type="button" name="back" id="back" value="Back" style="display:none;">
+                        <input class="btn btn-warning" type="button" name="next" id="next" value="Next">
                         <!--<input class="btn btn-default" type="submit" name="finish" id="finish" value="Finish" style="display:none;">-->
                     </div>
 
@@ -445,7 +421,7 @@ if(isset($_POST['finish'])) {
                 <style>
                     #registration-step{margin:0;padding:0;}
                     #registration-step li{list-style:none; float:left;padding:5px 10px;border-top:#EEE 1px solid;border-left:#EEE 1px solid;border-right:#EEE 1px solid;}
-                    #registration-step li.highlight{background-color:#EEE;}
+                    #registration-step li.highlight{background-color:#F19B2C;}
                     #registration-form{clear:both;border:1px #EEE solid;padding:20px;}
                     .demoInputBox{padding: 10px;border: #F0F0F0 1px solid;border-radius: 4px;background-color: #FFF;width: 50%;}
                     .registration-error{color:#FF0000; padding-left:15px;}

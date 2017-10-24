@@ -9,8 +9,8 @@ if (isset($_SESSION['logname']) && ($_SESSION['rank'])) {
         case 1:
             header('location:../admin/index.php');//redirect to  page
             break;
-        case 3:
-            header('location:../officer/index.php');//redirect to  page
+        case 2:
+            header('location:../user/index.php');//redirect to  page
             break;
 
     }
@@ -38,12 +38,12 @@ while($res = mysqli_fetch_array($result1))
 
 if (isset($_POST['add'])) {
 
-    $User_Name_=$_POST['User_Name'];
-    $User_Contact_=$_POST['User_Contact'];
-    $User_Email_=$_POST['User_Email'];
+    $Officer_Name_=$_POST['Officer_Name'];
+    $Officer_Number_=$_POST['Officer_Number'];
+    $Officer_Work_=$_POST['Officer_Work'];
 
-    mysqli_query($con,"INSERT INTO User_Table(User_Id,User_Name,User_Email,User_Number)
-      values ('$id','$User_Name_','$User_Email_','$User_Contact_')
+    mysqli_query($con,"INSERT INTO Officer_Table(Officer_Id,Officer_Name,Officer_Number,Officer_Work)
+      values ('$id','$Officer_Name_','$Officer_Number_','$Officer_Work_')
       ") or die(mysqli_error($con));
 
     $msg = "<div class='alert alert-success'>
@@ -87,20 +87,20 @@ include'header.php';?>
                         <label for="User_Name" class="col-sm-2 control-label">Full Name</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" required id="User_Name" name="User_Name" pattern="[a-zA-Z0-9\s]+{4,}" title="Use letters ONLY" placeholder="John Doe">
+                            <input type="text" class="form-control" required id="Officer_Name" name="Officer_Name" pattern="[a-zA-Z0-9\s]+{4,}" title="Use letters ONLY" placeholder="John Doe">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="User_Contact" class="col-sm-2 control-label">Contact</label>
+                        <label for="Officer_Number" class="col-sm-2 control-label">Contact</label>
 
                         <div class="col-sm-10">
-                            <input type="tel" class="form-control" required pattern="^[0-9\-\+\s\(\)]*$" title="Input the correct contact as our example" id="User_Contact" name="User_Contact" placeholder="+254724090774">
+                            <input type="tel" class="form-control" required pattern="^[0-9\-\+\s\(\)]*$" title="Input the correct contact as our example" id="Officer_Number" name="Officer_Number" placeholder="+254724090774">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="User_Email" class="col-sm-2 control-label">Email</label>
+                        <label for="Officer_Work" class="col-sm-2 control-label">Occupation</label>
                         <div class="col-sm-10">
-                        <input type="email" name="User_Email" class="form-control" id="User_Email" placeholder="Email" required>
+                            <textarea cols="5" rows="10" name="Officer_Work" class="form-control" id="Officer_Work"  required></textarea>
                         </div>
                     </div>
                     <div class="form-group">
