@@ -1,8 +1,46 @@
 <?php
-include_once ("control.php");
-require ("../connection/db.php")
-?>
+/**
+ * Created by PhpStorm.
+ * User: king
+ * Date: 10/10/2017
+ * Time: 10:44
+ */
 
+session_start();
+
+// Check, if user is already login, then jump to secured page
+if (isset($_SESSION['logname']) && isset($_SESSION['rank'])) {
+    switch($_SESSION['rank']) {
+
+        case 2:
+            header('location:../user/index.php');//redirect to  page
+            break;
+        case 3:
+            header('location:../officer/index.php');//redirect to  page
+            break;
+
+    }
+}elseif(!isset($_SESSION['logname']) && !isset($_SESSION['rank'])) {
+    header('Location:../sessions.php');
+}
+else
+{
+
+    header('Location:index.php');
+}
+
+include '../connection/db.php';
+$username=$_SESSION['logname'];
+
+$result1 = mysqli_query($con, "SELECT * FROM Login_Table WHERE Login_Username='$username'");
+
+while($res = mysqli_fetch_array($result1))
+{
+    $username= $res['Login_Username'];
+    $id= $res['Login_Id'];
+
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +74,7 @@ require ("../connection/db.php")
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini layout-boxed">
+<body class="hold-transition skin-yellow sidebar-mini layout-boxed">
 <div class="wrapper">
 
   <header class="main-header">
@@ -46,7 +84,7 @@ require ("../connection/db.php")
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>M</b>P</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Missing</b> People</span>
+      <span class="logo-lg">Missing People</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -60,63 +98,38 @@ require ("../connection/db.php")
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
           <li class="dropdown messages-menu">
+              <?php
+                
+                $result = mysqli_query($con,"SELECT COUNT(Missing_Persons_Id) FROM Missing_Persons_Table");
+                $row1 = mysqli_fetch_array($result);
+
+                $x = $row1[0];
+               ?>
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>
-              <span class="label label-success">4</span>
+              <span class="label label-success"><?php echo $x;?></span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">You have 4 messages</li>
+              <li class="header">You have <?php echo $x;?> messages</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
                   <!-- end message -->
-                  <li>
-                    <a href="#">
-                      <div class="pull-left">
-                        <img src="../dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
-                      </div>
-                      <h4>
-                        Developers
-                        <small><i class="fa fa-clock-o"></i> Today</small>
-                      </h4>
-                      <p>Why not buy a new awesome theme?</p>
-                    </a>
-                  </li>
-
-
+                 
                 </ul>
               </li>
-              <li class="footer"><a href="#">See All Messages</a></li>
+              <li class="footer"><a href="missing.php">See All Messages</a></li>
             </ul>
           </li>
           <!-- Notifications: style can be found in dropdown.less -->
-          <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning">10</span>
-            </a>
-            <ul class="dropdown-menu">
-              <li class="header">You have 10 notifications</li>
-              <li>
-                <!-- inner menu: contains the actual data -->
-                <ul class="menu">
-                  <li>
-                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="footer"><a href="#">View all</a></li>
-            </ul>
-          </li>
+        
           <!-- Tasks: style can be found in dropdown.less -->
 
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs"><?php echo $username;  ;?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -124,8 +137,8 @@ require ("../connection/db.php")
                 <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  <?php echo $username;  ;?> - admin
+                  <small><?php echo date('D.M.Y'); ?></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -173,7 +186,7 @@ require ("../connection/db.php")
           <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p><?php echo $username;  ;?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -202,9 +215,7 @@ require ("../connection/db.php")
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-            <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-            <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
+            <li><a href="off_new.php"><i class="fa fa-user-circle"></i> Officer</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -216,17 +227,18 @@ require ("../connection/db.php")
         </span>
         </a>
             <ul class="treeview-menu">
-            <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-            <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-            <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
+            <li><a href="admins.php"><i class="fa fa-paperclip"></i> <span>Officers</span></a></li>
+            <li><a href="users.php"><i class="fa fa-paperclip"></i> <span>Users</span></a></li>
+
             </ul>
         </li>
 
         <li><a href=""><i class="fa fa-question"></i> <span>Get Help</span></a></li>
-        <li class="header">TAGS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+        <li class="header">SETTINGS</li>
+        <li><a href="#"><i class="fa fa-cogs"></i> <span>Preference</span></a></li>
+        <li><a href=""><i class="fa fa-question-circle"></i> <span>FAQ'S</span></a></li>
+        <li class="header">MORE</li>
+        <li><a href="../logout.php?logout"><i class="fa fa-lock"></i> <span>Logout</span></a></li>
       </ul>
 
     </section>
@@ -253,11 +265,11 @@ require ("../connection/db.php")
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-android-car"></i></span>
+            <span class="info-box-icon bg-gray-active"><i class="ion ion-android-car"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Officers</span>
-              <span class="info-box-number"><a href="index.php"><h6>2 officers online</h6></a> </span>
+              <span class="info-box-text">Admins</span>
+              <span class="info-box-number"><a href="admins.php"><h6>View all</h6></a> </span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -266,11 +278,11 @@ require ("../connection/db.php")
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="ion ion-ios-people-outline"></i></span>
+            <span class="info-box-icon bg-gray-active"><i class="ion ion-ios-people-outline"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">users</span>
-              <span class="info-box-number"><a href="index.php"><h6>2 users online</h6></a></span>
+              <span class="info-box-number"><a href="users.php"><h6>View all</h6></a></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -283,11 +295,11 @@ require ("../connection/db.php")
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-minus"></i></span>
+            <span class="info-box-icon bg-gray-active"><i class="ion ion-ios-minus"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Missing People</span>
-              <span class="info-box-number"><a href="index.php"><h6>2 missing people</h6></a></span>
+              <span class="info-box-text">Officers</span>
+              <span class="info-box-number"><a href="officers.php"><h6>View all</h6></a></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -296,11 +308,11 @@ require ("../connection/db.php")
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-paper-outline"></i></span>
+            <span class="info-box-icon bg-gray-active"><i class="ion ion-ios-paper-outline"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Reports</span>
-              <span class="info-box-number"><a href="index.php"><h6>Get all reports</h6></a></span>
+              <span class="info-box-text">Handling</span>
+              <span class="info-box-number"><a href="handled.php"><h6>view handled cases</h6></a></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -308,6 +320,68 @@ require ("../connection/db.php")
         </div>
         <!-- /.col -->
       </div>
+
+        <!--  SECOND  MENU--->
+     <div>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-gray-active"><i class="ion ion-android-notifications"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Missing</span>
+                        <span class="info-box-number"><a href="missing.php"><h6>All missing people</h6></a> </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-gray-active"><i class="fa fa-dollar"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Our Terms</span>
+                        <span class="info-box-number"><a href="app_pay.php"><h6>Terms & conditions</h6></a></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <!-- fix for small devices only -->
+            <div class="clearfix visible-sm-block"></div>
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-gray-active"><i class="fa fa-question"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">FAQS</span>
+                        <span class="info-box-number"><a href="officers.php"><h6>Read FAQS</h6></a></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-gray-active"><i class="fa fa-question-circle-o"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Help</span>
+                        <span class="info-box-number"><a href="handled.php"><h6>Get help</h6></a></span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
       <!-- /.row -->
        <!-- ADD CONTENT HERE -->
 
@@ -323,7 +397,7 @@ require ("../connection/db.php")
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2014-2016 <a href="">online id system</a>.</strong> All rights
     reserved.
   </footer>
 

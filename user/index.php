@@ -69,11 +69,11 @@ while($res = mysqli_fetch_array($result1))
 
 //GENERATE TICKET CODE
 
-$chars = array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+$chars = array(0,1,2,3,4,5,6,7,8,9);
 $serial = '';
 $max = count($chars)-1;
 for($i=0;$i<20;$i++){
-    $serial .= (!($i % 5) && $i ? '-' : '').$chars[rand(0, $max)];
+    $serial .= (!($i % 5) && $i ? '' : '').$chars[rand(0, $max)];
 }
 /**
  * Created by PhpStorm.
@@ -84,6 +84,10 @@ for($i=0;$i<20;$i++){
 
 if(isset($_POST['finish'])) {
 
+
+    move_uploaded_file($_FILES["image"]["tmp_name"], '../upload/' .$_FILES["image"]["name"]);
+
+    $location ='../upload/'.$_FILES["image"]["name"];
 
     $Missing_Persons_Id_=$_POST['Missing_Persons_Id'];
     $Missing_Persons_Name_=$_POST['Missing_Persons_Name'];
@@ -99,8 +103,8 @@ if(isset($_POST['finish'])) {
 
     if ($count==0) {
 
-        $query = "INSERT INTO Missing_Persons_Table(Missing_Persons_Id,Missing_Persons_Name,Missing_Persons_Age,Missing_Persons_Gender,Missing_Persons_Identity,Missing_Persons_Description)
- VALUES('$Missing_Persons_Id_','$Missing_Persons_Name_','$Missing_Persons_Age_','$Missing_Persons_Gender_','$Missing_Persons_Identity_','$Missing_Persons_Description_')";
+        $query = "INSERT INTO Missing_Persons_Table(Missing_Persons_Id,Missing_Persons_Name,Missing_Persons_Age,Missing_Persons_Gender,Missing_Persons_Identity,Missing_Persons_Image,Missing_Persons_Description)
+ VALUES('$Missing_Persons_Id_','$Missing_Persons_Name_','$Missing_Persons_Age_','$Missing_Persons_Gender_','$Missing_Persons_Identity_','$location','$Missing_Persons_Description_')";
 
 //inserting in login table
 //$query .= "INSERT INTO Login_table(Login_Username,login_rank,Login_Password,login_status) VALUES('$uname','$rank','$enc','Inactive')";
@@ -196,19 +200,25 @@ if(isset($_POST['finish'])) {
                     <!-- Messages: style can be found in dropdown.less-->
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
+                        <?php
+
+                        $result = mysqli_query($con,"SELECT COUNT(Missing_Persons_Id) FROM Missing_Persons_Table");
+                        $row1 = mysqli_fetch_array($result);
+
+                        $x = $row1[0];
+                        ?>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">21</span>
+                            <span class="label label-warning"><?php echo $x;?></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">We have 21 missing people</li>
+
+                            <li class="header">We have <?php echo $x;?> missing people</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                     <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> VNXkj888 Missing
-                                        </a>
+
                                     </li>
                                 </ul>
                             </li>
@@ -372,14 +382,19 @@ if(isset($_POST['finish'])) {
                             <input type="text" class="form-control" placeholder="" value="<?php echo $serial;?>" name="Missing_Persons_Id" id="Missing_Persons_Id">
                         </div>
                         <div class="form-group">
+                            <label for="image">Photo</label>
+                            <input type="file" class="form-control" name="image" id="image" value="">
+                        </div>
+                        <div class="form-group">
                             <label for="Missing_Persons_Name">Full Name</label>
-                            <input class="form-control" name="Missing_Persons_Name" id="Missing_Persons_Name" required>
+                            <input type="text" class="form-control" name="Missing_Persons_Name" id="Missing_Persons_Name" required>
                         </div>
 
                         <div class="form-group">
                             <label for="Missing_Persons_Age">Missing Persons Age (*yrs)</label>
                             <input type="number" class="form-control" name="Missing_Persons_Age" id="Missing_Persons_Age" value="">
                         </div>
+
                         <div class="form-group">
                             <label for="Missing_Persons_Gender">Gender</label>
                             <select class="form-control" name="Missing_Persons_Gender" id="Missing_Persons_Gender">
