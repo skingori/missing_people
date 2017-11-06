@@ -1,22 +1,16 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: king
- * Date: 10/10/2017
- * Time: 10:44
- */
+include_once ("../connection/db.php");
 
 session_start();
 // Check, if user is already login, then jump to secured page
 if (isset($_SESSION['logname']) && ($_SESSION['rank'])) {
     switch($_SESSION['rank']) {
 
+        case 1:
+            header('location:../admin/index.php');//redirect to  page
+            break;
         case 2:
             header('location:../user/index.php');//redirect to  page
-            break;
-        case 3:
-            header('location:../officer/index.php');//redirect to  page
             break;
 
     }
@@ -40,31 +34,67 @@ while($res = mysqli_fetch_array($result1))
     $id= $res['Login_Id'];
 
 }
+
+
+//ADD DATA
+
+if(isset($_GET['xid'])) {
+
+    $test=$_GET['xid'];
+
+    $result = mysqli_query($con, "SELECT * FROM Missing_Persons_Table WHERE Missing_Persons_Id='$test'");
+
+    while($result = mysqli_fetch_array($result))
+    {
+        $Missing_Persons_Identity_= $result['Missing_Persons_Identity'];
+
+    }
+
+
+    if ($con->connect_error) {
+        die("Connection failed: " . $con->connect_error);
+    }
+
+    $sql = "INSERT INTO Handling_Officer_Table(Handling_Officer_Mp_Id,Handling_Officer_Officer_Id ,Handling_Officer_User_Id)
+VALUES ('$test', '$id' ,'$Missing_Persons_Identity_')";
+
+    if ($con->query($sql) === TRUE) {
+        $msg = "<div class='alert alert-success'>
+            <span class='glyphicon glyphicon-info-sign'></span> &nbsp; successfully registered !
+            </div>";
+
+        header('location: handle.php');
+
+    } else {
+
+        $msg = "<div class='alert alert-danger'>
+            <span class='glyphicon glyphicon-info-sign'></span> &nbsp; error while registering !
+            </div>" . $sql . "<br>" . $con->error;
+    }
+
+    $con->close();
+}
+
 ?>
-<?php include "header.php";?>
-    <!-- -->
-<?php
 
-include "../connection/db.php";
-// Check connection
+<?php include "header.php";
 
-$result = mysqli_query($con, "SELECT * FROM Missing_Persons_Table WHERE Missing_Persons_Id IN(SELECT Handling_Officer_Mp_Id FROM Handling_Officer_Table)");
+$result = mysqli_query($con, "SELECT * FROM Missing_Persons_Table WHERE Missing_Persons_Id NOT IN(SELECT Handling_Officer_Mp_Id FROM Handling_Officer_Table)");
 ?>
 <div class="box">
 
     <div class="box-header">
-        <h3 class="box-title" style="font-family:Consolas; font-size: small">All handled cases</h3>
+       <h3 class="box-title" style="font-family:Consolas; font-size: small">All unhandled cases</h3>
     </div>
     <div class="box-body">
-        <table class="table table-striped table-hover table-bordered table-condensed" id="table1" style="font-family: consolas; font-size: small">
+        <table class="table table-striped table-hover table-bordered table-condensed" id="table1">
             <thead class="bg-primary">
-            <th>Profile photo</th>
-            <th>Name</th>
+            <th>Image</th>
+            <th width="15%">Name</th>
             <th>Age</th>
             <th>Gender</th>
             <th>Report by</th>
             <th>Description</th>
-            <th></th>
             <th></th>
 
             </thead>
@@ -81,20 +111,18 @@ $result = mysqli_query($con, "SELECT * FROM Missing_Persons_Table WHERE Missing_
                 echo "<td>" . $res['Missing_Persons_Gender'] . "</td>";
                 echo "<td>" . $res['Missing_Persons_Identity'] . "</td>";
                 echo "<td>" . $res['Missing_Persons_Description'] . "</td>";
-                echo "<td><a href=\"handle_un.php?un=$res[Missing_Persons_Id]\" onClick=\"return confirm('Are you sure you want to edit?')\" class='btn btn-primary fa fa-pencil'> </a></td>";
-                echo "<td><a href=\"delete.php?un=$res[Missing_Persons_Id]\" onClick=\"return confirm('Are you sure you want to delete?')\" class='btn btn-google fa fa-trash'></a></td>";
+                echo "<td><a href='handle.php?xid=$res[Missing_Persons_Id]' onClick=\"return confirm('Are you sure you want to handle?')\" class='btn btn-flat btn-primary fa fa-pencil'> Handle</a></td>";
 
             }
             ?>
             </tbody>
             <tfoot class="bg-info">
-            <th>Profile photo</th>
+            <th>Image</th>
             <th width="15%">Name</th>
             <th>Age</th>
             <th>Gender</th>
             <th>Report by</th>
             <th>Description</th>
-            <th></th>
             <th></th>
 
 
@@ -103,6 +131,5 @@ $result = mysqli_query($con, "SELECT * FROM Missing_Persons_Table WHERE Missing_
         </table>
     </div>
 </div>
-    <!-- -->
-<?php include "footer.php";?>
 
+<?php include "footer.php";?>

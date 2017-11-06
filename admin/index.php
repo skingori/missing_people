@@ -74,7 +74,7 @@ while($res = mysqli_fetch_array($result1))
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-yellow sidebar-mini layout-boxed">
+<body class="hold-transition skin-yellow sidebar-mini fixed">
 <div class="wrapper">
 
   <header class="main-header">
@@ -118,7 +118,7 @@ while($res = mysqli_fetch_array($result1))
                  
                 </ul>
               </li>
-              <li class="footer"><a href="missing.php">See All Messages</a></li>
+              <li class="footer"><a href="unhandled.php">See All Messages</a></li>
             </ul>
           </li>
           <!-- Notifications: style can be found in dropdown.less -->
@@ -227,15 +227,17 @@ while($res = mysqli_fetch_array($result1))
         </span>
         </a>
             <ul class="treeview-menu">
-            <li><a href="admins.php"><i class="fa fa-paperclip"></i> <span>Officers</span></a></li>
+            <li><a href="officers.php"><i class="fa fa-paperclip"></i> <span>Officers</span></a></li>
             <li><a href="users.php"><i class="fa fa-paperclip"></i> <span>Users</span></a></li>
+            <li><a href="handled.php"><i class="fa fa-paperclip"></i> <span>Handled Cases</span></a></li>
+            <li><a href="unhandled.php"><i class="fa fa-paperclip"></i> <span>Unhandled Cases</span></a></li>
 
             </ul>
         </li>
 
         <li><a href=""><i class="fa fa-question"></i> <span>Get Help</span></a></li>
         <li class="header">SETTINGS</li>
-        <li><a href="#"><i class="fa fa-cogs"></i> <span>Preference</span></a></li>
+        <li><a href="dashboard.php"><i class="fa fa-cogs"></i> <span>Preference</span></a></li>
         <li><a href=""><i class="fa fa-question-circle"></i> <span>FAQ'S</span></a></li>
         <li class="header">MORE</li>
         <li><a href="../logout.php?logout"><i class="fa fa-lock"></i> <span>Logout</span></a></li>
@@ -262,130 +264,96 @@ while($res = mysqli_fetch_array($result1))
     <!-- Main content -->
     <section class="content">
       <!-- Info boxes -->
-      <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-gray-active"><i class="ion ion-android-car"></i></span>
 
-            <div class="info-box-content">
-              <span class="info-box-text">Admins</span>
-              <span class="info-box-number"><a href="admins.php"><h6>View all</h6></a> </span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-gray-active"><i class="ion ion-ios-people-outline"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">users</span>
-              <span class="info-box-number"><a href="users.php"><h6>View all</h6></a></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <!-- fix for small devices only -->
-        <div class="clearfix visible-sm-block"></div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-gray-active"><i class="ion ion-ios-minus"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Officers</span>
-              <span class="info-box-number"><a href="officers.php"><h6>View all</h6></a></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-gray-active"><i class="ion ion-ios-paper-outline"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Handling</span>
-              <span class="info-box-number"><a href="handled.php"><h6>view handled cases</h6></a></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-      </div>
-
-        <!--  SECOND  MENU--->
-     <div>
-        <div class="row">
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-gray-active"><i class="ion ion-android-notifications"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Missing</span>
-                        <span class="info-box-number"><a href="missing.php"><h6>All missing people</h6></a> </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-gray-active"><i class="fa fa-dollar"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Our Terms</span>
-                        <span class="info-box-number"><a href="app_pay.php"><h6>Terms & conditions</h6></a></span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-
-            <!-- fix for small devices only -->
-            <div class="clearfix visible-sm-block"></div>
-
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-gray-active"><i class="fa fa-question"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">FAQS</span>
-                        <span class="info-box-number"><a href="officers.php"><h6>Read FAQS</h6></a></span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-gray-active"><i class="fa fa-question-circle-o"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Help</span>
-                        <span class="info-box-number"><a href="handled.php"><h6>Get help</h6></a></span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-            <!-- /.col -->
-        </div>
-    </div>
-      <!-- /.row -->
        <!-- ADD CONTENT HERE -->
 
+          <section class="content">
+              <div class="box">
 
+                  <?php
+                  if (isset($msg)) {
+                      echo $msg;
+                  }
+                  ?>
+                  <!-- ADD CONTENT HERE -->
+                  <ul id="registration-step">
+                      <li id="account" class="highlight">Report Missing</li>
+                      <li id="password">Next</li>
+                      <li id="general">Confirm</li>
+                  </ul>
+                  <form name="frmRegistration" id="registration-form" method="POST" enctype="multipart/form-data">
+                      <div id="account-field">
+
+                          <div class="form-group" hidden>
+                              <label for="Ticket_Id">Missing_Persons_Id</label>
+                              <input type="text" class="form-control" placeholder="" value="<?php echo $serial;?>" name="Missing_Persons_Id" id="Missing_Persons_Id">
+                          </div>
+                          <div class="form-group">
+                              <label for="pic">Photo</label>
+                              <input type="file" class="form-control" name="pic" id="pic" value="">
+                          </div>
+                          <div class="form-group">
+                              <label for="Missing_Persons_Name">Full Name</label>
+                              <input type="text" class="form-control" name="Missing_Persons_Name" id="Missing_Persons_Name" required>
+                          </div>
+
+                          <div class="form-group">
+                              <label for="Missing_Persons_Age">Missing Persons Age (*yrs)</label>
+                              <input type="number" class="form-control" name="Missing_Persons_Age" id="Missing_Persons_Age" value="">
+                          </div>
+
+                          <div class="form-group">
+                              <label for="Missing_Persons_Gender">Gender</label>
+                              <select class="form-control" name="Missing_Persons_Gender" id="Missing_Persons_Gender">
+                                  <option value="Male"> MALE </option>
+                                  <option value="Female"> FEMALE </option>
+                              </select>
+                          </div>
+                      </div>
+                      <div id="password-field" style="display:none;">
+
+                          <div class="box-body pad">
+                              <label for="Ticket_Description">Description</label>
+                              <textarea cols="5" rows="8" class="form-control" name="Missing_Persons_Description"></textarea>
+                          </div>
+                      </div>
+
+                      <div id="general-field" style="display:none;" class="form-group">
+                          <div class="col-xs-8">
+                              <div class="checkbox icheck">
+                                  <label>
+                                      <input type="checkbox" required> I agree to the <a href="#">terms</a>
+                                  </label>
+                                  &
+                                  <button type="submit" name="finish" class="btn btn-github">Finish</button>
+
+                              </div>
+                          </div>
+
+                      </div>
+
+
+                      <div>
+                          <input class="btn btn-warning" type="button" name="back" id="back" value="Back" style="display:none;">
+                          <input class="btn btn-warning" type="button" name="next" id="next" value="Next">
+                          <!--<input class="btn btn-default" type="submit" name="finish" id="finish" value="Finish" style="display:none;">-->
+                      </div>
+
+                  </form>
+                  <style>
+                      #registration-step{margin:0;padding:0;}
+                      #registration-step li{list-style:none; float:left;padding:5px 10px;border-top:#EEE 1px solid;border-left:#EEE 1px solid;border-right:#EEE 1px solid;}
+                      #registration-step li.highlight{background-color:#F19B2C;}
+                      #registration-form{clear:both;border:1px #EEE solid;padding:20px;}
+                      .demoInputBox{padding: 10px;border: #F0F0F0 1px solid;border-radius: 4px;background-color: #FFF;width: 50%;}
+                      .registration-error{color:#FF0000; padding-left:15px;}
+                      .message {color: #00FF00;font-weight: bold;width: 100%;padding: 10px;}
+                      .btnAction{padding: 5px 10px;background-color: #09F;border: 0;color: #FFF;cursor: pointer; margin-top:15px;}
+                  </style>
+              </div>
+              <!--END ADD CONTENT HERE -->
+              <!-- /.row -->
+          </section>
         <!--END ADD CONTENT HERE -->
       <!-- /.row -->
     </section>
@@ -513,10 +481,74 @@ while($res = mysqli_fetch_array($result1))
 <!-- SlimScroll -->
 <script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS -->
-<script src="bower_components/Chart.js/Chart.js"></script>
+<script src="../bower_components/Chart.js/Chart.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../dist/js/pages/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+
+<script src="../bower_components/ckeditor/ckeditor.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script>
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('Missing_Persons_Description')
+        //bootstrap WYSIHTML5 - text editor
+        $('.textarea').wysihtml5()
+    })
+</script>
+<script>
+    function validate() {
+        var output = true;
+        return output;
+    }
+    $(document).ready(function() {
+        $("#next").click(function(){
+            var output = validate();
+            if(output) {
+                var current = $(".highlight");
+                var next = $(".highlight").next("li");
+                if(next.length>0) {
+                    $("#"+current.attr("id")+"-field").hide();
+                    $("#"+next.attr("id")+"-field").show();
+                    $("#back").show();
+                    $("#finish").hide();
+                    $(".highlight").removeClass("highlight");
+                    next.addClass("highlight");
+                    if($(".highlight").attr("id") == $("li").last().attr("id")) {
+                        $("#next").hide();
+                        $("#finish").show();
+                    }
+                }
+            }
+        });
+        $("#back").click(function(){
+            var current = $(".highlight");
+            var prev = $(".highlight").prev("li");
+            if(prev.length>0) {
+                $("#"+current.attr("id")+"-field").hide();
+                $("#"+prev.attr("id")+"-field").show();
+                $("#next").show();
+                $("#finish").hide();
+                $(".highlight").removeClass("highlight");
+                prev.addClass("highlight");
+                if($(".highlight").attr("id") == $("li").first().attr("id")) {
+                    $("#back").hide();
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+    });
+</script>
 </body>
 </html>

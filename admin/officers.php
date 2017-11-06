@@ -74,7 +74,7 @@ $result = mysqli_query($con, "SELECT * FROM Officer_Table");
                     echo "<td class=''>".$res['Officer_Name']."</td>";
                     echo "<td>".$res['Officer_Number']."</td>";
                     echo "<td>".$res['Officer_Work']."</td>";
-                    echo "<td><a href=\"editwith.php?wit=$res[Officer_Id]\" onClick=\"return confirm('Are you sure you want to edit?')\" class='fa fa-edit lg-2'></a></td>";
+                    echo "<td><a href=\"off_new_.php?off=$res[Officer_Id]\" onClick=\"return confirm('Are you sure you want to edit?')\" class='fa fa-edit lg-2'></a></td>";
                     echo "<td><a href=\"delete.php?ap=$res[Officer_Id]\" onClick=\"return confirm('Are you sure you want to delete?')\" class='fa fa-trash lg-2'></a></td>";
                 }
                 ?>

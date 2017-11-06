@@ -13,10 +13,10 @@ if (isset($_SESSION['logname']) && isset($_SESSION['rank'])) {
     switch($_SESSION['rank']) {
 
         case 1:
-            header('location:../admin/index.php?home');//redirect to  page
+            header('location:../admin/index.php');//redirect to  page
             break;
         case 2:
-            header('location:../user/index.php?home');//redirect to  page
+            header('location:../user/index.php');//redirect to  page
             break;
 
     }

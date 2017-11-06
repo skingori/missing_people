@@ -27,8 +27,8 @@ else
 {
 
     header('Location:index.php');
-}
 
+}
 include '../connection/db.php';
 $username=$_SESSION['logname'];
 
@@ -69,11 +69,11 @@ while($res = mysqli_fetch_array($result1))
 
 //GENERATE TICKET CODE
 
-$chars = array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+$chars = array(0,1,2,3,4,5,6,7,8,9);
 $serial = '';
 $max = count($chars)-1;
-for($i=0;$i<20;$i++){
-    $serial .= (!($i % 5) && $i ? '-' : '').$chars[rand(0, $max)];
+for($i=0;$i<15;$i++){
+    $serial .= (!($i % 5) && $i ? '' : '').$chars[rand(0, $max)];
 }
 /**
  * Created by PhpStorm.
@@ -84,6 +84,10 @@ for($i=0;$i<20;$i++){
 
 if(isset($_POST['finish'])) {
 
+
+    move_uploaded_file($_FILES["pic"]["tmp_name"], '../img/' . $_FILES["pic"]["name"]);
+
+    $location ='../img/'. $_FILES["pic"]["name"];
 
     $Missing_Persons_Id_=$_POST['Missing_Persons_Id'];
     $Missing_Persons_Name_=$_POST['Missing_Persons_Name'];
@@ -99,8 +103,8 @@ if(isset($_POST['finish'])) {
 
     if ($count==0) {
 
-        $query = "INSERT INTO Missing_Persons_Table(Missing_Persons_Id,Missing_Persons_Name,Missing_Persons_Age,Missing_Persons_Gender,Missing_Persons_Identity,Missing_Persons_Description)
- VALUES('$Missing_Persons_Id_','$Missing_Persons_Name_','$Missing_Persons_Age_','$Missing_Persons_Gender_','$Missing_Persons_Identity_','$Missing_Persons_Description_')";
+        $query = "INSERT INTO Missing_Persons_Table(Missing_Persons_Id,Missing_Persons_Name,Missing_Persons_Age,Missing_Persons_Gender,Missing_Persons_Identity,Missing_Persons_Image,Missing_Persons_Description)
+ VALUES('$Missing_Persons_Id_','$Missing_Persons_Name_','$Missing_Persons_Age_','$Missing_Persons_Gender_','$Missing_Persons_Identity_','$location','$Missing_Persons_Description_')";
 
 //inserting in login table
 //$query .= "INSERT INTO Login_table(Login_Username,login_rank,Login_Password,login_status) VALUES('$uname','$rank','$enc','Inactive')";
@@ -166,12 +170,13 @@ if(isset($_POST['finish'])) {
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-yellow sidebar-mini layout-boxed">
+<body class="hold-transition skin-yellow sidebar-mini fixed">
 <div class="wrapper">
 
     <header class="main-header">
@@ -196,19 +201,25 @@ if(isset($_POST['finish'])) {
                     <!-- Messages: style can be found in dropdown.less-->
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
+                        <?php
+
+                        $result = mysqli_query($con,"SELECT COUNT(Missing_Persons_Id) FROM Missing_Persons_Table");
+                        $row1 = mysqli_fetch_array($result);
+
+                        $x = $row1[0];
+                        ?>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">21</span>
+                            <span class="label label-warning"><?php echo $x;?></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">We have 21 missing people</li>
+
+                            <li class="header">We have <?php echo $x;?> missing people</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                     <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> VNXkj888 Missing
-                                        </a>
+
                                     </li>
                                 </ul>
                             </li>
@@ -216,17 +227,17 @@ if(isset($_POST['finish'])) {
                         </ul>
                     </li>
                     <!-- Tasks: style can be found in dropdown.less -->
-                   
+
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="../dist/img/user2-160x160.png" class="user-image" alt="User Image">
+                            <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs"><?php echo $username ; ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="../dist/img/user2-160x160.png" class="img-circle" alt="User Image">
+                                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
                                     <?php echo $username ; ?> - Welcome
@@ -275,7 +286,7 @@ if(isset($_POST['finish'])) {
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../dist/img/user2-160x160.png" class="img-circle" alt="User Image">
+                    <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p><?php echo $username ; ?></p>
@@ -301,7 +312,7 @@ if(isset($_POST['finish'])) {
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-user-secret"></i>
-                        <span>New Entry</span>
+                        <span>Report Case</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -311,22 +322,22 @@ if(isset($_POST['finish'])) {
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="#">
+                    <a href="">
                         <i class="fa ion-ios-cog"></i>
-                        <span>Progress</span>
+                        <span>Handle case</span>
                         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="index.php"><i class="fa fa-search-plus"></i>Show</a></li>
+                        <li><a href="handle.php"><i class="fa fa-search-plus"></i>Start</a></li>
                     </ul>
                 </li>
-                
+
                 <li><a href=""><i class="fa fa-question"></i> <span>Get Help</span></a></li>
                 <li class="header">TAGS</li>
-                
-                <li><a href=""><i class="fa ion-ios-email-outline"></i> <span> Requests</span></a></li>
+
+                <li><a href="progress.php"><i class="fa ion-ios-email-outline"></i> <span> View Progress</span></a></li>
                 <li class="header">MORE</li>
                 <li><a href="../logout.php?logout"><i class="fa ion-ios-locked-outline text-green"></i> <span>Sign Out</span></a></li>
             </ul>
@@ -364,7 +375,7 @@ if(isset($_POST['finish'])) {
                     <li id="password">Next</li>
                     <li id="general">Confirm</li>
                 </ul>
-                <form name="frmRegistration" id="registration-form" method="POST">
+                <form name="frmRegistration" id="registration-form" method="POST" enctype="multipart/form-data">
                     <div id="account-field">
 
                         <div class="form-group" hidden>
@@ -372,27 +383,32 @@ if(isset($_POST['finish'])) {
                             <input type="text" class="form-control" placeholder="" value="<?php echo $serial;?>" name="Missing_Persons_Id" id="Missing_Persons_Id">
                         </div>
                         <div class="form-group">
+                            <label for="pic">Photo</label>
+                            <input type="file" class="form-control" name="pic" id="pic" value="">
+                        </div>
+                        <div class="form-group">
                             <label for="Missing_Persons_Name">Full Name</label>
-                            <input class="form-control" name="Missing_Persons_Name" id="Missing_Persons_Name" required>
+                            <input type="text" class="form-control" name="Missing_Persons_Name" id="Missing_Persons_Name" required>
                         </div>
 
                         <div class="form-group">
                             <label for="Missing_Persons_Age">Missing Persons Age (*yrs)</label>
                             <input type="number" class="form-control" name="Missing_Persons_Age" id="Missing_Persons_Age" value="">
                         </div>
+
                         <div class="form-group">
                             <label for="Missing_Persons_Gender">Gender</label>
                             <select class="form-control" name="Missing_Persons_Gender" id="Missing_Persons_Gender">
-                                <option value="MALE"> MALE </option>
-                                <option value="FEMLAE"> FEMALE </option>
+                                <option value="Male"> MALE </option>
+                                <option value="Female"> FEMALE </option>
                             </select>
                         </div>
                     </div>
                     <div id="password-field" style="display:none;">
 
-                        <div class="form-group">
-                            <label for="Ticket_Description">Description</label>
-                            <textarea cols="5" rows="8" class="form-control" name="Missing_Persons_Description"></textarea>
+                        <div class="box-body pad">
+                            <label for="Missing_Persons_Description">Description</label>
+                            <textarea style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" class="form-control" id="Missing_Persons_Description" name="Missing_Persons_Description"></textarea>
                         </div>
                     </div>
 
@@ -429,7 +445,6 @@ if(isset($_POST['finish'])) {
                     .btnAction{padding: 5px 10px;background-color: #09F;border: 0;color: #FFF;cursor: pointer; margin-top:15px;}
                 </style>
             </div>
-            <div class=""><button class="btn btn-flat btn-linkedin">Available open requests*</button></div>
             <!--END ADD CONTENT HERE -->
             <!-- /.row -->
         </section>
@@ -557,11 +572,24 @@ if(isset($_POST['finish'])) {
 <!-- SlimScroll -->
 <script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS -->
-<script src="bower_components/Chart.js/Chart.js"></script>
+<script src="../bower_components/Chart.js/Chart.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../dist/js/pages/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
+
+<script src="../bower_components/ckeditor/ckeditor.js"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script>
+    $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('Missing_Persons_Description')
+        //bootstrap WYSIHTML5 - text editor
+        $('.textarea').wysihtml5()
+    })
+</script>
 <script>
     function validate() {
         var output = true;
@@ -613,5 +641,6 @@ if(isset($_POST['finish'])) {
         });
     });
 </script>
+
 </body>
 </html>

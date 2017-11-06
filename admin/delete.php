@@ -10,15 +10,15 @@
 //including the database connection file
 include("../connection/db.php");
 
-if (isset($_GET['appp'])){
+if (isset($_GET['un'])){
     //getting id of the data from url
-    $id = $_GET['appp']; //deletin milk
+    $id = $_GET['un']; //deletin milk
     //deleting the row from table
-    $result = mysqli_query($con, "DELETE FROM Application_Payment_Table WHERE Application_Payment_Id=$id ");
+    $result = mysqli_query($con, "DELETE FROM Missing_Persons_Table WHERE Missing_Persons_Id=$id ");
 //$result = mysqli_query($con, "DELETE FROM login_table WHERE login_username=$id");
 
 //redirecting to the display page (index.php in our case)
-    header("Location:app_pay.php");
+    header("Location:dashboard.php");
 }
 
 
@@ -30,8 +30,8 @@ if (isset($_GET['us'])){
 
 if (isset($_GET['ap'])){
     $id =$_GET['ap']; //deleting feeds
-    $result = mysqli_query($con, "DELETE FROM Application_Table WHERE Application_Id=$id ");
-    header("Location:officers.php?msg");
+    $result = mysqli_query($con, "DELETE FROM Officer_Table WHERE Officer_Id=$id ");
+    header("Location:officers.php");
 
 }
 
@@ -44,7 +44,7 @@ if (isset($_GET['payi'])){
 if (isset($_GET['not'])){
     $id =$_GET['not']; //deleting feeds
     $result = mysqli_query($con, "DELETE FROM Notification_Table WHERE Notification_Id=$id ");
-    header("Location:missing.php?msg");
+    header("Location:unhandled.php?msg");
 }
 
 ?>

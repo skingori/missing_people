@@ -41,33 +41,36 @@ while($res = mysqli_fetch_array($result1))
 
 }//Editing
 
-$off=$_GET['off'];
+$un=$_GET['un'];
 
-$result1 = mysqli_query($con, "SELECT * FROM Officer_Table WHERE Officer_Id='$off'");
+$result1 = mysqli_query($con, "SELECT * FROM Missing_Persons_Table WHERE Missing_Persons_Id='$un'");
 
 while($res = mysqli_fetch_array($result1))
 {
-    $Officer_Name =$res['Officer_Name'];
-    $Officer_Number =$res['Officer_Number'];
-    $Officer_Work =$res['Officer_Work'];
+    $Missing_Persons_Name =$res['Missing_Persons_Name'];
+    $Missing_Persons_Age =$res['Missing_Persons_Age'];
+    $Missing_Persons_Gender =$res['Missing_Persons_Gender'];
+    $Missing_Persons_Identity =$res['Missing_Persons_Identity'];
+    $Missing_Persons_Description =$res['Missing_Persons_Description'];
 }
 
 if(isset($_POST['edit'])) {
 
-    $Officer_Name_ =$_POST['Officer_Name'];
-    $Officer_Number_ =$_POST['Officer_Number'];
-    $Officer_Work_ =$_POST['Officer_Work'];
-
+    $Missing_Persons_Name_ =$_POST['Missing_Persons_Name'];
+    $Missing_Persons_Age_ =$$_POST['Missing_Persons_Age'];
+    $Missing_Persons_Gender_ =$_POST['Missing_Persons_Gender'];
+    $Missing_Persons_Identity_ =$_POST['Missing_Persons_Identity'];
+    $Missing_Persons_Description_ =$_POST['Missing_Persons_Description'];
     
-    $result = mysqli_query($con, "UPDATE Officer_Table SET Officer_Id='$off', Officer_Name='$Officer_Name_'
- ,Officer_Number='$Officer_Number_',Officer_Work='$Officer_Work_' WHERE Officer_Id=$off");
+    $result = mysqli_query($con, "UPDATE Missing_Persons_Table SET Missing_Persons_Id='$un', Missing_Persons_Name='$Missing_Persons_Name_'
+ ,Missing_Persons_Age='$Missing_Persons_Age_',Missing_Persons_Gender='$Missing_Persons_Gender_',Missing_Persons_Identity='$Missing_Persons_Identity_',Missing_Persons_Description='$Missing_Persons_Description_' WHERE Missing_Persons_Id=$un");
 
     //redirectig to the display page. In our case, it is index.php
     $msg = "<div class='alert alert-success'>
     <span class='glyphicon glyphicon-info-sign'></span> &nbsp; successfully Updated !
         </div>";
 
-    header('refresh: 2; url=officers.php');
+    header('refresh: 2; url=dashboard.php');
 }
 
 include "header.php";?>
@@ -82,14 +85,10 @@ include "header.php";?>
     <p class="login-box-msg">Edit Officer</p>
 
     <form class="" method="post" id="myForm">
+       
         <div class="form-group has-feedback">
-            <label>Officer identity:</label>
-            <input type="text" class="form-control" readonly="" value="<?php echo $off; ?>" required name="Officer_Id" title="Must contain only numbers 0-9" minlength="4" maxlength="15" pattern="\d*" placeholder="Officer ID">
-            <span class="glyphicon glyphicon-barcode form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-            <label>Officer Name:</label>
-            <input type="text" class="form-control" value="<?php echo $Officer_Name; ?>" required id="" name="Officer_Name" placeholder="Full Name">
+            <label>Full Name:</label>
+            <input type="text" class="form-control" value="<?php echo $Missing_Persons_Name; ?>" required id="" name="Officer_Name" placeholder="Full Name">
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">

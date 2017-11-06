@@ -17,6 +17,9 @@ if (isset($_SESSION['logname']) && isset($_SESSION['rank'])) {
         case 2:
             header('location:user/index.php');//redirect to  page
             break;
+        case 3:
+            header('location:officer/index.php');//redirect to  page
+            break;
 
     }
 }elseif(!isset($_SESSION['logname']) && !isset($_SESSION['rank'])) {

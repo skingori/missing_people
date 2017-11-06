@@ -33,7 +33,7 @@
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-yellow sidebar-mini layout-boxed">
+<body class="hold-transition skin-yellow sidebar-mini fixed">
 <div class="wrapper">
 
   <header class="main-header">
@@ -77,7 +77,7 @@
                  
                 </ul>
               </li>
-              <li class="footer"><a href="missing.php">See All Messages</a></li>
+              <li class="footer"><a href="unhandled.php">See All Messages</a></li>
             </ul>
           </li>
           <!-- Notifications: style can be found in dropdown.less -->
@@ -186,15 +186,17 @@
         </span>
                   </a>
                   <ul class="treeview-menu">
-                      <li><a href="admins.php"><i class="fa fa-paperclip"></i> <span>Officers</span></a></li>
+                      <li><a href="officers.php"><i class="fa fa-paperclip"></i> <span>Officers</span></a></li>
                       <li><a href="users.php"><i class="fa fa-paperclip"></i> <span>Users</span></a></li>
+                      <li><a href="handled.php"><i class="fa fa-paperclip"></i> <span>Handled Cases</span></a></li>
+                      <li><a href="unhandled.php"><i class="fa fa-paperclip"></i> <span>Un-handled Cases</span></a></li>
 
                   </ul>
               </li>
 
               <li><a href=""><i class="fa fa-question"></i> <span>Get Help</span></a></li>
               <li class="header">SETTINGS</li>
-              <li><a href="#"><i class="fa fa-cogs"></i> <span>Preference</span></a></li>
+              <li><a href="dashboard.php"><i class="fa fa-cogs"></i> <span>Preference</span></a></li>
               <li><a href=""><i class="fa fa-question-circle"></i> <span>FAQ'S</span></a></li>
               <li class="header">MORE</li>
               <li><a href="../logout.php?logout"><i class="fa fa-lock"></i> <span>Logout</span></a></li>
@@ -210,7 +212,8 @@
     <section class="content-header">
       <h1>
 
-        <small>Built 1.0</small>
+        <button class="btn btn-default" onclick="printData()"><i class="fa fa-file-pdf-o"></i> </button>
+          <button class="btn btn-default" onclick="printData()"><i class="fa fa-print"></i> </button>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>

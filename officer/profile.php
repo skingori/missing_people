@@ -87,20 +87,20 @@ include'header.php';?>
                         <label for="User_Name" class="col-sm-2 control-label">Full Name</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" required id="Officer_Name" name="Officer_Name" pattern="[a-zA-Z0-9\s]+{4,}" title="Use letters ONLY" placeholder="John Doe">
+                            <input type="text" class="form-control" required id="User_Name" name="Officer_Name" pattern="[a-zA-Z0-9\s]+{4,}" title="Use letters ONLY" placeholder="John Doe">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Officer_Number" class="col-sm-2 control-label">Contact</label>
+                        <label for="User_Contact" class="col-sm-2 control-label">Mobile Number</label>
 
                         <div class="col-sm-10">
-                            <input type="tel" class="form-control" required pattern="^[0-9\-\+\s\(\)]*$" title="Input the correct contact as our example" id="Officer_Number" name="Officer_Number" placeholder="+254724090774">
+                            <input type="tel" class="form-control" required pattern="^[0-9\-\+\s\(\)]*$" title="Input the correct contact as our example" id="User_Contact" name="Officer_Number" placeholder="+254724090774">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Officer_Work" class="col-sm-2 control-label">Occupation</label>
+                        <label for="User_Email" class="col-sm-2 control-label">Occupation</label>
                         <div class="col-sm-10">
-                            <textarea cols="5" rows="10" name="Officer_Work" class="form-control" id="Officer_Work"  required></textarea>
+                        <input type="text" name="Officer_Work" class="form-control" id="User_Email" placeholder="Occupation" required>
                         </div>
                     </div>
                     <div class="form-group">

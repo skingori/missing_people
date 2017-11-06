@@ -31,8 +31,24 @@
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <style>
+        .example-modal .modal {
+            position: relative;
+            top: auto;
+            bottom: auto;
+            right: auto;
+            left: auto;
+            display: block;
+            z-index: 1;
+        }
+
+        .example-modal .modal {
+            background: transparent !important;
+        }
+    </style>
 </head>
-<body class="hold-transition skin-yellow sidebar-mini layout-boxed">
+<body class="hold-transition skin-yellow fixed sidebar-mini">
 <div class="wrapper">
 
     <header class="main-header">
@@ -57,19 +73,24 @@
                     <!-- Messages: style can be found in dropdown.less-->
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
+                        <?php
+                        $result = mysqli_query($con,"SELECT COUNT(Missing_Persons_Id) FROM Missing_Persons_Table");
+                        $row1 = mysqli_fetch_array($result);
+
+                        $x = $row1[0];
+                        ?>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">21</span>
+                            <span class="label label-warning"><?php echo $x;?></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">We have 21 missing people</li>
+
+                            <li class="header">We have <?php echo $x;?> missing people</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
                                     <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> VNXkj888 Missing
-                                        </a>
+
                                     </li>
                                 </ul>
                             </li>
@@ -77,17 +98,17 @@
                         </ul>
                     </li>
                     <!-- Tasks: style can be found in dropdown.less -->
-                   
+
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="../dist/img/user2-160x160.png" class="user-image" alt="User Image">
+                            <img src="../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                             <span class="hidden-xs"><?php echo $username ; ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="../dist/img/user2-160x160.png" class="img-circle" alt="User Image">
+                                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
                                     <?php echo $username ; ?> - Welcome
@@ -136,7 +157,7 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="../dist/img/user2-160x160.png" class="img-circle" alt="User Image">
+                    <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p><?php echo $username ; ?></p>
@@ -162,7 +183,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-user-secret"></i>
-                        <span>New Entry</span>
+                        <span>Report Case</span>
                         <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -172,22 +193,22 @@
                     </ul>
                 </li>
                 <li class="treeview">
-                    <a href="#">
+                    <a href="">
                         <i class="fa ion-ios-cog"></i>
-                        <span>Progress</span>
+                        <span>Handle case</span>
                         <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="index.php"><i class="fa fa-search-plus"></i>Show</a></li>
+                        <li><a href="handle.php"><i class="fa fa-search-plus"></i>Start</a></li>
                     </ul>
                 </li>
-                
+
                 <li><a href=""><i class="fa fa-question"></i> <span>Get Help</span></a></li>
                 <li class="header">TAGS</li>
-                
-                <li><a href=""><i class="fa ion-ios-email-outline"></i> <span> Requests</span></a></li>
+
+                <li><a href="progress.php"><i class="fa ion-ios-email-outline"></i> <span> View Progress</span></a></li>
                 <li class="header">MORE</li>
                 <li><a href="../logout.php?logout"><i class="fa ion-ios-locked-outline text-green"></i> <span>Sign Out</span></a></li>
             </ul>
