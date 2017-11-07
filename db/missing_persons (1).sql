@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 24, 2017 at 10:52 AM
+-- Generation Time: Nov 07, 2017 at 12:09 PM
 -- Server version: 5.6.35
 -- PHP Version: 7.1.8
 
@@ -30,11 +30,18 @@ USE `missing_persons`;
 
 DROP TABLE IF EXISTS `Handling_Officer_Table`;
 CREATE TABLE `Handling_Officer_Table` (
-  `Handling_Officer_Id` int(20) NOT NULL DEFAULT '0',
-  `Handling_Officer_Mp_Id` int(20) DEFAULT NULL,
+  `Handling_Officer_Id` int(20) NOT NULL,
+  `Handling_Officer_Mp_Id` bigint(20) DEFAULT NULL,
   `Handling_Officer_Officer_Id` int(20) DEFAULT NULL,
   `Handling_Officer_User_Id` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Handling_Officer_Table`
+--
+
+INSERT INTO `Handling_Officer_Table` (`Handling_Officer_Id`, `Handling_Officer_Mp_Id`, `Handling_Officer_Officer_Id`, `Handling_Officer_User_Id`) VALUES
+(1, 133646420632107, 3274527, 23424242);
 
 -- --------------------------------------------------------
 
@@ -55,9 +62,10 @@ CREATE TABLE `Login_Table` (
 --
 
 INSERT INTO `Login_Table` (`Login_Id`, `Login_Username`, `Login_Password`, `Login_Rank`) VALUES
-(21212, 'user', '21232f297a57a5a743894a0e4a801fc3', '2'),
 (21213, 'officer', '21232f297a57a5a743894a0e4a801fc3', '3'),
-(23232323, 'admin', '21232f297a57a5a743894a0e4a801fc3', '1');
+(3274527, 'test2', '7be790e8f2934273c118ef565475c216', '3'),
+(23232323, 'admin', '21232f297a57a5a743894a0e4a801fc3', '1'),
+(23424242, 'user', '21232f297a57a5a743894a0e4a801fc3', '2');
 
 -- --------------------------------------------------------
 
@@ -67,21 +75,21 @@ INSERT INTO `Login_Table` (`Login_Id`, `Login_Username`, `Login_Password`, `Logi
 
 DROP TABLE IF EXISTS `Missing_Persons_Table`;
 CREATE TABLE `Missing_Persons_Table` (
-  `Missing_Persons_Id` varchar(255) NOT NULL DEFAULT '0',
+  `Missing_Persons_Id` bigint(20) NOT NULL,
   `Missing_Persons_Name` varchar(255) DEFAULT NULL,
   `Missing_Persons_Age` varchar(255) DEFAULT NULL,
   `Missing_Persons_Gender` varchar(255) DEFAULT NULL,
   `Missing_Persons_Identity` varchar(255) DEFAULT NULL,
-  `Missing_Persons_Description` varchar(255) DEFAULT NULL
+  `Missing_Persons_Description` varchar(255) DEFAULT NULL,
+  `Missing_Persons_Image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `Missing_Persons_Table`
 --
 
-INSERT INTO `Missing_Persons_Table` (`Missing_Persons_Id`, `Missing_Persons_Name`, `Missing_Persons_Age`, `Missing_Persons_Gender`, `Missing_Persons_Identity`, `Missing_Persons_Description`) VALUES
-('4MXZE-PIXSL-YA8BN-EQS05', 'dssfsfsd', '34', 'MALE', '21212', 'ffsdffre'),
-('URYVQ-T9GFZ-LS8I8-7HI3X', 'gfhgfg', '8798798', 'MALE', '21212', 'kgkjghg\r\nbnmnb\r\nmnmm,bjkhhjhj\r\ntyuytytyub,jhmbnmbmnb,nm\r\njhkjhkjhkj');
+INSERT INTO `Missing_Persons_Table` (`Missing_Persons_Id`, `Missing_Persons_Name`, `Missing_Persons_Age`, `Missing_Persons_Gender`, `Missing_Persons_Identity`, `Missing_Persons_Description`, `Missing_Persons_Image`) VALUES
+(133646420632107, 'Missing missing', '9', 'Male', '23424242', '<p>missing missing</p>\r\n', '../img/avatar.png');
 
 -- --------------------------------------------------------
 
@@ -102,7 +110,7 @@ CREATE TABLE `Officer_Table` (
 --
 
 INSERT INTO `Officer_Table` (`Officer_Id`, `Officer_Name`, `Officer_Number`, `Officer_Work`) VALUES
-(21213, 'f d', 2147483647, '34343');
+(3274527, 'John Kithima', 2147483647, 'Administration Police');
 
 -- --------------------------------------------------------
 
@@ -123,7 +131,7 @@ CREATE TABLE `User_Table` (
 --
 
 INSERT INTO `User_Table` (`User_Id`, `User_Name`, `User_Email`, `User_Number`) VALUES
-(21212, 'sdsds', 'sds@dff.com', '434343433');
+(23424242, 'James Test', 'dfdf@lk.com', '67577675675');
 
 --
 -- Indexes for dumped tables
@@ -133,7 +141,8 @@ INSERT INTO `User_Table` (`User_Id`, `User_Name`, `User_Email`, `User_Number`) V
 -- Indexes for table `Handling_Officer_Table`
 --
 ALTER TABLE `Handling_Officer_Table`
-  ADD PRIMARY KEY (`Handling_Officer_Id`);
+  ADD PRIMARY KEY (`Handling_Officer_Id`),
+  ADD KEY `Handling_Officer_Mp_Id` (`Handling_Officer_Mp_Id`);
 
 --
 -- Indexes for table `Login_Table`
@@ -160,8 +169,29 @@ ALTER TABLE `User_Table`
   ADD PRIMARY KEY (`User_Id`);
 
 --
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Handling_Officer_Table`
+--
+ALTER TABLE `Handling_Officer_Table`
+  MODIFY `Handling_Officer_Id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `Handling_Officer_Table`
+--
+ALTER TABLE `Handling_Officer_Table`
+  ADD CONSTRAINT `handling_officer_table_ibfk_1` FOREIGN KEY (`Handling_Officer_Mp_Id`) REFERENCES `Missing_Persons_Table` (`Missing_Persons_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `Officer_Table`
+--
+ALTER TABLE `Officer_Table`
+  ADD CONSTRAINT `officer_table_ibfk_1` FOREIGN KEY (`Officer_Id`) REFERENCES `Login_Table` (`Login_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `User_Table`
